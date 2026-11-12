@@ -1,0 +1,98 @@
+
+PLAY [Stage 08a - refuse to run without confirmation] **************************
+
+TASK [Require the confirmation string] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Confirmed. Removing the L3Outs, the overlays and the link, removing switches from Pseudoco-DC1 and External, deleting both fabrics, then stripping Ethernet1/8 sub-interfaces from DC-Service-Leaf."
+}
+
+PLAY [Stage 08b - detach and delete the L3Outs] ********************************
+
+TASK [Look on the controller for Pseudoco-DC1] *********************************
+ok: [Pseudoco-DC1]
+
+TASK [Note whether the controller still has Pseudoco-DC1] **********************
+ok: [Pseudoco-DC1]
+
+TASK [Select the L3Outs that belong to Pseudoco-DC1] ***************************
+ok: [Pseudoco-DC1]
+
+TASK [Report the L3Out result] *************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "No L3Outs in Pseudoco-DC1 - nothing to remove."
+}
+
+PLAY [Stage 08c - remove the overlays] *****************************************
+
+TASK [Report the overlay result] ***********************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Pseudoco-DC1 is not on the controller - nothing to remove."
+}
+
+PLAY [Stage 08d - remove the inter-fabric link] ********************************
+
+TASK [Note whether the link is still there] ************************************
+ok: [Pseudoco-DC1]
+
+TASK [Report the link result] **************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "No inter-fabric link on Ethernet1/8 - nothing to remove."
+}
+
+PLAY [Stage 08e - remove the switches from both fabrics] ***********************
+
+TASK [Look on the controller for External] *************************************
+ok: [Pseudoco-DC1]
+
+TASK [Note which fabrics are still on the controller] **************************
+ok: [Pseudoco-DC1]
+
+TASK [Report the inventory result] *********************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "0 fabric(s) had switches removed. The edge router's own configuration is untouched - it is in Monitor Mode and pre-built by the pod."
+}
+
+PLAY [Stage 08f - delete both fabrics] *****************************************
+
+TASK [Report the fabric result] ************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Neither fabric was on the controller - nothing to delete."
+}
+
+PLAY [Stage 08g - build the border leaf SSH group] *****************************
+
+TASK [Add the border leaf to the SSH group] ************************************
+ok: [localhost]
+
+PLAY [Stage 08h - strip the VRF-Lite sub-interfaces off the border leaf] *******
+
+TASK [Read the running configuration of Ethernet1/8] ***************************
+ok: [DC-Service-Leaf]
+
+TASK [Work out which sub-interfaces are actually present] **********************
+ok: [DC-Service-Leaf]
+[WARNING]: To ensure idempotency and correct diff the input configuration lines
+should be similar to how they appear if present in the running configuration on
+device
+
+TASK [Remove the sub-interfaces and default Ethernet1/8] ***********************
+changed: [DC-Service-Leaf]
+
+TASK [Save the configuration] **************************************************
+changed: [DC-Service-Leaf]
+
+TASK [Read the interface back] *************************************************
+ok: [DC-Service-Leaf]
+
+TASK [Fail when a sub-interface survived] **************************************
+ok: [DC-Service-Leaf] => {
+    "changed": false,
+    "msg": "DC-Service-Leaf Ethernet1/8 is back to its default and carries no sub-interfaces. Safe to rebuild with playbooks/00_discover_dc_switch_serials.yml then playbooks/01_dc_deploy.yml."
+}
+
+PLAY RECAP *********************************************************************
+DC-Service-Leaf            : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Pseudoco-DC1               : ok=11   changed=0    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0   
+localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

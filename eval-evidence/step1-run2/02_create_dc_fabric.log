@@ -1,0 +1,265 @@
+
+PLAY [Stage 02 - create the DC fabric intent] **********************************
+
+TASK [Look for the generated switch model] *************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Read the switch model back to check the serials are real] ****************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.common_global : Verify User Tags] *********************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Role Entry Point - [cisco.nac_dc_vxlan.validate]] ***
+ok: [Pseudoco-DC1] => {
+    "msg": [
+        "----------------------------------------------------------------",
+        "+     Calling Role - [cisco.nac_dc_vxlan.validate]             +",
+        "----------------------------------------------------------------"
+    ]
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Display Role Path] *************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Role Path - /home/cisco/.ansible/collections/ansible_collections/cisco/nac_dc_vxlan/roles/validate"
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Display Inventory Directory] ***************
+ok: [Pseudoco-DC1] => {
+    "msg": "Inventory Directory - /home/cisco/eval-nd-l3out/ansible-automation/02_data_center/ansible/inventory"
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Validate NDFC Service Model Data] **********
+ok: [Pseudoco-DC1] => {
+    "msg": "Calling Role Validate - nac_dc_vxlan.validate"
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Display Workflow Type - Direct to Controller (DTC)] ***
+ok: [Pseudoco-DC1] => {
+    "msg": "Workflow is Direct to Controller (DTC)"
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Check for Schema Path Being Defined] *******
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Check for Enhanced Roles Path Being Defined] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Perform Required Syntax and Semantic Model Validation] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Stat Factory Defaults] *********************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Include Factory Defaults if Available] *****
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Merge factory and custom defaults] *********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Register Variable With Only Defaults from Previous Task] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Prepare Service Model] *********************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Store Golden Service Model Data] ***********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Store Extended Service Model Data] *********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Check Roles] *******************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Read Run Map From Previous Run] ************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Set Validate Runtime Mode] *****************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Display Validate Runtime Mode] *************
+ok: [Pseudoco-DC1 -> localhost] => {
+    "msg": [
+        "force_run_all=False",
+        "diff_run=False",
+        "ansible_run_tags=['all']",
+        "checksum_compare=False",
+        "display_model_diff=False"
+    ]
+}
+
+TASK [cisco.nac_dc_vxlan.validate : Initialize Run Map] ************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Stat the Golden Service Model Data] ********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Stat the Extended Service Model Data] ******
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Move Golden Service Model Data Previous] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Move Extended Service Model Data Previous] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Copy Service Model Data to Host] ***********
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Copy Extended Service Model Data to Host] ***
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.validate : Mark Stage Role Validate Completed] ********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Verify Connection to Nexus Dashboard] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Verify Authorization to Nexus Dashboard] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Get Cisco Nexus Dashboard Version] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Set Cisco Nexus Dashboard Version Var] ***
+ok: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Get Cisco Nexus Dashboard Fabric Controller Version] ***
+ok: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.connectivity_check : Set Cisco Nexus Dashboard Fabric Controller Version Var] ***
+ok: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.common : Create Fact To Store Common Role Path] *******
+ok: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.common : Build Resources] *****************************
+changed: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.common : Store Resource Data For Use In Subsequent Roles] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [cisco.nac_dc_vxlan.common : Store Change Flags For Use In Subsequent Roles] ***
+ok: [Pseudoco-DC1 -> localhost]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 1/21: fabric (dcnm_fabric)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] fabric → ok (changed=False) [2.9s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 2/21: inventory (dcnm_inventory)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] inventory → ok (changed=False) [0.6s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 3/21: underlay_ip_address (_underlay_ip_remote_diff)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] underlay_ip_address → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 4/21: underlay_ip_address (dcnm_resource_manager)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] underlay_ip_address → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 5/21: update_switch_hostname_policy (_update_switch_hostname_policy)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] update_switch_hostname_policy → ok (changed=False) [1.8s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 6/21: inventory_config_save (_config_save)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] inventory_config_save → skipped (no runtime changes) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 7/21: vpc_domain_id_resource (dcnm_resource_manager)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vpc_domain_id_resource → skipped (no diff) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 8/21: vpc_fabric_peering_links (dcnm_links)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vpc_fabric_peering_links → skipped (no diff) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 9/21: vpc_peering (dcnm_vpc_pair)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vpc_peering → ok (changed=False) [0.9s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 10/21: vpc_config_save (_config_save)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vpc_config_save → skipped (no runtime changes) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 11/21: tor_pairing (_tor_pairing)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] tor_pairing → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 12/21: tor_config_save (_config_save)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] tor_config_save → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 13/21: interface_all (dcnm_interface)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] interface_all → ok (changed=False) [1.1s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 14/21: edge_connections (dcnm_policy)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] edge_connections → skipped (no diff) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 15/21: vrfs (dcnm_vrf)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vrfs → ok (changed=False) [2.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 16/21: vrf_loopback_attach (_vrf_loopback_attach)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] vrf_loopback_attach → ok (changed=False) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 17/21: networks (dcnm_network)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] networks → ok (changed=False) [2.2s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 18/21: fabric_links (_fabric_links_query_and_filter)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] fabric_links → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 19/21: fabric_links (dcnm_links)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] fabric_links → skipped (data_model_guard) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 20/21: policy (_policy_remote_diff)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] policy → ok (changed=False) [0.0s]
+
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] Step 21/21: policy (dcnm_policy)
+───────────────────────────────────────────────────────────────────────────────
+CREATE [Pseudoco-DC1] policy → skipped (data_model_guard) [0.0s]
+
+═══════════════════════════════════════════════════════════════════════════════
+CREATE [Pseudoco-DC1] Pipeline complete — 21 steps in 11.4s
+═══════════════════════════════════════════════════════════════════════════════
+
+TASK [cisco.nac_dc_vxlan.create : Execute Create Resources] ********************
+ok: [Pseudoco-DC1]
+
+TASK [cisco.nac_dc_vxlan.create : Mark Stage Role Create Completed] ************
+ok: [Pseudoco-DC1 -> localhost]
+
+PLAY RECAP *********************************************************************
+Pseudoco-DC1               : ok=42   changed=3    unreachable=0    failed=0    skipped=19   rescued=0    ignored=0   
+[WARNING]: The schema () does not appear to exist!
+[WARNING]: Diff Run Feature is Disabled on this run for Fabric Pseudoco-DC1 as
+one or more run map flags are `false` or `ansible_run_tags` is not 'all'.

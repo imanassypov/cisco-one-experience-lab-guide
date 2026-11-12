@@ -1,0 +1,149 @@
+
+PLAY [Stage 07a - name the border leaf as the target of the BGP session check] ***
+
+TASK [Add the border leaf to the switch group so it can be read over SSH] ******
+ok: [Pseudoco-DC1]
+
+PLAY [Stage 07b - read the VRF-Lite BGP session state off the border leaf] *****
+
+TASK [Ask the border leaf for the BGP session state of each VRF-Lite VRF] ******
+ok: [DC-Service-Leaf] => (item=PROD to 192.168.252.6)
+ok: [DC-Service-Leaf] => (item=IOT to 192.168.252.10)
+ok: [DC-Service-Leaf] => (item=MAIN to 192.168.252.14)
+
+TASK [Read each VRF-Lite sub-interface off the border leaf] ********************
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.2)
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.3)
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.4)
+
+PLAY [Stage 07c - compare the fabric against intent and write the report] ******
+
+TASK [Read the declared VRFs] **************************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Read the declared networks] **********************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Flatten the declared intent] *********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail on an attach group that is named but never declared] ****************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Read the fabric inventory] ***********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the fabric VRFs] ****************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the fabric networks] ************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the VRF attachments] ************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Build the declared L3Out definitions] ************************************
+included: /home/cisco/eval-nd-l3out/ansible-automation/02_data_center/ansible/playbooks/tasks/l3out_config.yml for Pseudoco-DC1
+
+TASK [Read the declared fabric ASN] ********************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Read the switch model stage 00 generated] ********************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Resolve the border leaf and edge router serials] *************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail when stage 00 left a serial unresolved] *****************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Build the L3Out definitions] *********************************************
+ok: [Pseudoco-DC1] => (item=PROD-External)
+ok: [Pseudoco-DC1] => (item=IOT-External)
+ok: [Pseudoco-DC1] => (item=MAIN-External)
+
+TASK [Compare the L3Outs on the controller with the declared definitions] ******
+ok: [Pseudoco-DC1]
+
+TASK [Read the raw L3Out collection for the evidence] **************************
+ok: [Pseudoco-DC1]
+
+TASK [Index the controller's L3Outs by name] ***********************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the network attachments] ********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Normalise the controller responses] **************************************
+ok: [Pseudoco-DC1]
+
+TASK [Compare each switch against intent] **************************************
+ok: [Pseudoco-DC1] => (item=DC-Leaf1)
+ok: [Pseudoco-DC1] => (item=DC-Leaf2)
+ok: [Pseudoco-DC1] => (item=DC-SPINE-1)
+ok: [Pseudoco-DC1] => (item=DC-SPINE-2)
+ok: [Pseudoco-DC1] => (item=DC-Service-Leaf)
+
+TASK [Compare VRFs] ************************************************************
+ok: [Pseudoco-DC1] => (item=MAIN)
+ok: [Pseudoco-DC1] => (item=PROD)
+ok: [Pseudoco-DC1] => (item=IOT)
+
+TASK [Compare networks] ********************************************************
+ok: [Pseudoco-DC1] => (item=MainNetwork1)
+ok: [Pseudoco-DC1] => (item=ProdNetwork1)
+ok: [Pseudoco-DC1] => (item=IOTNetwork1)
+
+TASK [Compare the L3Outs] ******************************************************
+ok: [Pseudoco-DC1] => (item=PROD-External)
+ok: [Pseudoco-DC1] => (item=IOT-External)
+ok: [Pseudoco-DC1] => (item=MAIN-External)
+
+TASK [Compare the VRF-Lite sub-interfaces on the switch] ***********************
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.2)
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.3)
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.4)
+
+TASK [Compare the VRF-Lite BGP sessions against intent] ************************
+ok: [Pseudoco-DC1] => (item=PROD to 192.168.252.6)
+ok: [Pseudoco-DC1] => (item=IOT to 192.168.252.10)
+ok: [Pseudoco-DC1] => (item=MAIN to 192.168.252.14)
+
+TASK [Collect the failures] ****************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Set the verification evidence run ID] ************************************
+ok: [Pseudoco-DC1]
+
+TASK [Make sure the evidence directory exists] *********************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Write the verification report] *******************************************
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [Write the verification report as HTML] ***********************************
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [Save the raw L3Out collection beside the report] *************************
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [Report the outcome] ******************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "20 of 20 check(s) match the declared intent. Markdown: /home/cisco/eval-nd-l3out/ansible-automation/02_data_center/ansible/evidence/stage07-verification-20261112T182926504926Z.md. HTML: /home/cisco/eval-nd-l3out/ansible-automation/02_data_center/ansible/evidence/stage07-verification-20261112T182926504926Z.html"
+}
+
+TASK [Fail on any mismatch] ****************************************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All 20 evaluated check(s) match the declared intent. "
+}
+
+PLAY RECAP *********************************************************************
+DC-Service-Leaf            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Pseudoco-DC1               : ok=34   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   

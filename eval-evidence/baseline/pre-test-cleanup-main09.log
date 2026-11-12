@@ -1,0 +1,124 @@
+
+PLAY [Stage 09a - refuse to run without confirmation] **************************
+
+TASK [Require the confirmation string] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Confirmed. Removing switches from Pseudoco-DC1 and External, deleting both fabrics, then stripping Ethernet1/8 sub-interfaces from DC-Service-Leaf."
+}
+
+PLAY [Stage 09b - remove the overlays] *****************************************
+
+TASK [List the fabrics on the controller] **************************************
+ok: [Pseudoco-DC1]
+
+TASK [Note whether the controller still has Pseudoco-DC1] **********************
+ok: [Pseudoco-DC1]
+
+TASK [Delete every network] ****************************************************
+changed: [Pseudoco-DC1]
+
+TASK [Delete every VRF] ********************************************************
+changed: [Pseudoco-DC1]
+
+TASK [Report the overlay result] ***********************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Networks removed (changed=True), VRFs removed (changed=True). This also clears the VRF-Lite extensions and the dot1q the controller reserved for them."
+}
+
+PLAY [Stage 09c - remove the VRF-Lite inter-fabric link] ***********************
+
+TASK [Delete the link on Ethernet1/8] ******************************************
+changed: [Pseudoco-DC1]
+
+TASK [Report the link result] **************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Inter-fabric link removed. changed=True. "
+}
+
+PLAY [Stage 09d - remove the switches from the DC fabric] **********************
+
+TASK [List the switches in Pseudoco-DC1] ***************************************
+ok: [Pseudoco-DC1]
+
+TASK [Force-remove every switch from Pseudoco-DC1] *****************************
+changed: [Pseudoco-DC1] => (item=DC-Leaf1 (leaf))
+changed: [Pseudoco-DC1] => (item=DC-Leaf2 (leaf))
+changed: [Pseudoco-DC1] => (item=DC-Service-Leaf (border))
+changed: [Pseudoco-DC1] => (item=DC-SPINE-1 (spine))
+changed: [Pseudoco-DC1] => (item=DC-SPINE-2 (spine))
+
+TASK [Report the DC inventory result] ******************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Pseudoco-DC1 inventory cleared - 5 switch(es) removed: DC-Leaf1, DC-Leaf2, DC-Service-Leaf, DC-SPINE-1, DC-SPINE-2."
+}
+
+PLAY [Stage 09e - remove the router from the External fabric] ******************
+
+TASK [List the fabrics on the controller] **************************************
+ok: [External]
+
+TASK [Note whether the controller still has External] **************************
+ok: [External]
+
+TASK [List the switches in External] *******************************************
+ok: [External]
+
+TASK [Force-remove every switch from External] *********************************
+changed: [External] => (item=DC-SITE11-CEDGE8Kv (edge router))
+
+TASK [Report the External inventory result] ************************************
+ok: [External] => {
+    "msg": "External inventory cleared - 1 device(s) removed. The edge router's own configuration is untouched - it is in Monitor Mode and pre-built by the pod."
+}
+
+PLAY [Stage 09f - delete both fabrics] *****************************************
+
+TASK [List the fabrics on the controller] **************************************
+ok: [Pseudoco-DC1]
+
+TASK [Delete both fabrics] *****************************************************
+changed: [Pseudoco-DC1]
+
+TASK [Report the fabric result] ************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "Fabrics deleted. changed=True."
+}
+
+PLAY [Stage 09g - build the border leaf SSH group] *****************************
+
+TASK [Add the border leaf to the SSH group] ************************************
+ok: [localhost]
+
+PLAY [Stage 09h - strip the VRF-Lite sub-interfaces off the border leaf] *******
+
+TASK [Read the running configuration of Ethernet1/8] ***************************
+ok: [DC-Service-Leaf]
+
+TASK [Work out which sub-interfaces are actually present] **********************
+ok: [DC-Service-Leaf]
+[WARNING]: To ensure idempotency and correct diff the input configuration lines
+should be similar to how they appear if present in the running configuration on
+device
+
+TASK [Remove the sub-interfaces and default Ethernet1/8] ***********************
+changed: [DC-Service-Leaf]
+
+TASK [Save the configuration] **************************************************
+changed: [DC-Service-Leaf]
+
+TASK [Read the interface back] *************************************************
+ok: [DC-Service-Leaf]
+
+TASK [Fail when a sub-interface survived] **************************************
+ok: [DC-Service-Leaf] => {
+    "changed": false,
+    "msg": "DC-Service-Leaf Ethernet1/8 is back to its default and carries no sub-interfaces. Safe to rebuild with playbooks/00_discover_dc_switch_serials.yml then playbooks/01_dc_deploy.yml."
+}
+
+PLAY RECAP *********************************************************************
+DC-Service-Leaf            : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+External                   : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Pseudoco-DC1               : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

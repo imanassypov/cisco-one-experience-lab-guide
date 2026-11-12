@@ -1,0 +1,41 @@
+### show running-config interface Ethernet1/8
+!Command: show running-config interface Ethernet1/8
+!Running configuration last done at: Thu Nov 12 18:22:45 2026
+!Time: Thu Nov 12 18:23:09 2026
+
+version 10.4(2) Bios:version  
+
+interface Ethernet1/8
+
+### show running-config | section "^interface Ethernet1/8\."
+awk: warning: escape sequence `\.' treated as plain `.'
+
+### show running-config bgp
+!Command: show running-config bgp
+!Running configuration last done at: Thu Nov 12 18:22:45 2026
+!Time: Thu Nov 12 18:23:11 2026
+
+version 10.4(2) Bios:version  
+feature bgp
+
+router bgp 65000
+  router-id 10.2.0.5
+  neighbor 10.2.0.1
+    remote-as 65000
+    description to-DC-SPINE-1
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+  neighbor 10.2.0.4
+    remote-as 65000
+    description to-DC-SPINE-2
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+evpn
+
+### show ip bgp summary vrf all
+BGP summary information for VRF default, address family IPv4 Unicast
+

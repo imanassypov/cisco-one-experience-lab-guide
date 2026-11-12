@@ -3,8 +3,10 @@
 Branch `eval/nd-l3out`, started from tag `eval-nd-l3out-base` (`main` at `a944eb5`).
 Nothing in this branch merges to `main`.
 
-**Status: Phase 1 complete. Phase 2 (implementation, no pod) complete - see
-section 5a. Phase 3 (pod tests) not started.**
+**Status: Phases 1 and 2 complete. Phase 3 steps 1-10 run on the pod on
+2026-11-12 and passed (section 6), pending the owner's manual re-confirmation
+of each stage. Step 11 (rollback to main) not pursued at the owner's request.
+Verdicts in section 1 are still provisional.**
 
 Evidence labels used throughout:
 
@@ -569,9 +571,62 @@ reaches the legacy `/appcenter/.../lan-fabric` read endpoints through the
 `cisco.nd.nd` httpapi plugin, and that re-sending the controller's own L3Out
 copy with `attach: false` is accepted (stage 08).
 
-## 6. Phase 3 results
+## 6. Phase 3 results (2026-11-12, pending manual re-confirmation)
 
-Not started.
+Run on the script server (Kali, Python 3.13.3, ansible-core 2.17.14) from a
+git worktree `~/eval-nd-l3out` of this branch, leaving the server's `main`
+checkout untouched. `cisco.nd` 1.5.0 (`671e596`) installed into the
+worktree's `.eval_collections`; `jsonpath-ng` added to `~/venv`; the venv's
+existing `pydantic` 2.14.3 was kept rather than downgraded to the 2.12.5
+upstream pins (it is required by `typer`) and caused no failure. Before the
+run, the fabrics `main` had built were captured (baseline) and removed with
+`main`'s `09_cleanup.yml`. Evidence: `docs/eval-evidence/`, serials redacted,
+scanned for vault secrets.
+
+| Step | Expected | Actual | Result | Evidence |
+| --- | --- | --- | --- | --- |
+| Baseline | `main` state captured | 20/20 checks; 3 eBGP sessions up 1d16h; `route-map extcon-rmap-filter out` on every neighbour | done | `baseline/` |
+| 1. Full run | 02-07 pass | Run 1: stage 05 rejected by ND, "Subinterface name should contain dot1q ID as well. Ex: Ethernet1/1.300" (B2 answered). Fixed (`1dabec7`). Run 2: all stages pass | pass after fix | `step1-run1/`, `step1-run2/` |
+| 2. Verify, BGP | 3 sessions Established | 20/20; all three Established; module drift none | pass | `step1-run2/stage07-verification.md` |
+| 3. Diff vs baseline | no unexplained difference | Sub-interfaces, addresses, VRFs, neighbours, route-map, prefixes received (6/10/7): identical. `network 0.0.0.0/0` missing in each VRF - fixed with `advertise_default_route: true` (`0d03e4d`). Remaining: `local-as 65000` per neighbour, from `fabric1_details.local_asn`; equal to the fabric ASN, no functional effect | pass after fix, 1 inert difference | `step3/diff-vs-baseline.txt` |
+| 4. Second full run | no changes | No controller-intent change in 02-05; changed only: NaC local file copies, config-save (by design), report files, and the L3Out attach (B4). After `51903a4`, stage 05 reports `changed=0` | pass after fix | `step4/` |
+| 5. Stage 02 alone | L3Outs and sessions survive | 20/20 after stage 02 and after a following deploy; sessions never reset | pass - ordering rule removed (Q8) | `step5/` |
+| 6. Compliance | DC-Service-Leaf in sync | all five switches `inSync` | pass | `step67/step67.json` |
+| 7. ND view | L3Outs, link visible | 3 L3Outs, `attach: true`; ebgpVrfLite link exactly as declared. ND also holds a second, policy-less `Ethernet1/8 -> Gi2` link it discovered over CDP. UI: VRF attachment Extend shows `NONE` | pass, 2 observations | `step67/step67.json` |
+| 8. `extensionValues` | answer Q8 | Absent from all three attachments (key not returned); status `deployed` | answered | `step8/vrfAttachments-query.json` |
+| 9. Change and revert | MAIN MTU 1500 -> 1400 -> 1500 | Switch showed 1400 then 1500 on Ethernet1/8.4, PROD unchanged; session stayed up; final 20/20. An L3Out update resets `attach` to false; stage 05 re-attaches | pass | `step9/` |
+| 10. Branch cleanup | pre-run state | L3Outs detached and deleted, then overlays, link, switches, fabrics, sub-interfaces. ND: no fabrics, no L3Outs. Re-run on the empty pod: `changed=0` | pass | `step10/` |
+| 11. Rollback to `main` | `main` runs end to end | Not pursued at the owner's request. One attempt was made first: a clean `main` (`a944eb5`) fails in its own stage 06 ("results returned: 0; expected: 3") - a `main` defect unrelated to this branch, fixed by an uncommitted edit on the server (`.DATA.results` -> `.DATA.resources`). With that edit stages 06 and 07 passed; stage 08 was not run | not pursued | `step11-not-pursued/` |
+
+Pod state after Phase 3: built by `main` (server checkout, with the edit
+above), unverified. To re-run this branch by hand, start with this branch's
+`08_cleanup.yml`.
+
+### Answers confirmed by test
+
+- B1/B3: ND accepts `vrf2_name` = the fabric VRF names with no VRF objects in
+  the External fabric, and an External fabric in Monitor Mode holding an
+  IOS-XE device as fabric 2. Nothing was written to the router.
+- B2: `interface_name` must be the sub-interface (`Ethernet1/8.2`).
+- B4: the L3Out GET carries `attach`; the module does not expose it. Fixed in
+  the stages by reading it. An update resets it to false.
+- Q5: attach stages intent only; nothing reached the switch until stage 06.
+- Q8: an attached L3Out leaves `extensionValues` empty; stage 02 cannot strip
+  it.
+- Q9: the L3Out template applies `route-map extcon-rmap-filter out` like
+  `main`'s template; `advertise_default_route: true` is needed to match
+  `main`'s `network 0.0.0.0/0`. The brief's "no route-maps today" was wrong.
+- Guide match: section 8 tells students to set Extend to `VRF_LITE`; with
+  L3Outs it stays `NONE` and the handoff lives under the L3Outs instead.
+
+### New questions for the ND BU and upstream
+
+- Why does an L3Out update reset `attach`, and can the module expose it?
+- Should a manual `ebgpVrfLite` link and ND's CDP-discovered link to the same
+  wire coexist (`GigabitEthernet2` vs `Gi2`)?
+- Can `fabric1_details.local_asn` be left unset without the module or ND
+  rejecting it, to avoid `local-as` equal to the fabric ASN?
+- `nd_manage_links` resolves link endpoints even for `deleted`.
 
 ## 7. Comparison, current method vs L3Out
 

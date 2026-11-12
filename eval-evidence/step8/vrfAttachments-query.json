@@ -1,0 +1,55 @@
+{
+    "attachments": [
+        {
+            "attach": true,
+            "errorMessage": null,
+            "extraConfig": "",
+            "instanceValues": {},
+            "showVlan": true,
+            "status": "deployed",
+            "switchFabricName": "Pseudoco-DC1",
+            "switchId": "<serial>",
+            "switchName": "DC-Service-Leaf",
+            "switchRole": "border",
+            "vlanId": 2000,
+            "vrfId": 50000,
+            "vrfName": "MAIN"
+        },
+        {
+            "attach": true,
+            "errorMessage": null,
+            "extraConfig": "",
+            "instanceValues": {},
+            "showVlan": true,
+            "status": "deployed",
+            "switchFabricName": "Pseudoco-DC1",
+            "switchId": "<serial>",
+            "switchName": "DC-Service-Leaf",
+            "switchRole": "border",
+            "vlanId": 2001,
+            "vrfId": 50001,
+            "vrfName": "PROD"
+        },
+        {
+            "attach": true,
+            "errorMessage": null,
+            "extraConfig": "",
+            "instanceValues": {},
+            "showVlan": true,
+            "status": "deployed",
+            "switchFabricName": "Pseudoco-DC1",
+            "switchId": "<serial>",
+            "switchName": "DC-Service-Leaf",
+            "switchRole": "border",
+            "vlanId": 2002,
+            "vrfId": 50002,
+            "vrfName": "IOT"
+        }
+    ],
+    "meta": {
+        "counts": {
+            "remaining": 0,
+            "total": 3
+        }
+    }
+}

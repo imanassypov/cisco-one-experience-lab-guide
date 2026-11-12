@@ -1,0 +1,795 @@
+{
+    "l3Outs": {
+        "l3Outs": [
+            {
+                "attach": true,
+                "configuredFabrics": "fabric1",
+                "connectivityDetails": {
+                    "links": [
+                        {
+                            "dot1qId": 2,
+                            "ipv4MaskLength": 30,
+                            "mtu": 1500,
+                            "switch1Details": {
+                                "interfaceName": "Ethernet1/8.2",
+                                "ipv4Address": "192.168.252.5",
+                                "switchId": "<serial>"
+                            },
+                            "switch2Details": {
+                                "interfaceName": "GigabitEthernet2.2",
+                                "ipv4Address": "192.168.252.6",
+                                "switchId": "<serial>"
+                            }
+                        }
+                    ],
+                    "routingInterfaceType": "subInterface"
+                },
+                "fabric1Name": "Pseudoco-DC1",
+                "fabric2Name": "External",
+                "ipVersion": "ipv4",
+                "lastUpdateTimestamp": "2026-11-12T18:28:41Z",
+                "name": "PROD-External",
+                "routingDetails": {
+                    "bfd": false,
+                    "fabric1Details": {
+                        "advertiseDefaultRoute": true,
+                        "localAsn": "65000"
+                    },
+                    "fabric2Details": {
+                        "localAsn": "65531"
+                    },
+                    "routingProtocol": "bgp"
+                },
+                "vrf1Name": "PROD",
+                "vrf2Name": "PROD"
+            },
+            {
+                "attach": true,
+                "configuredFabrics": "fabric1",
+                "connectivityDetails": {
+                    "links": [
+                        {
+                            "dot1qId": 3,
+                            "ipv4MaskLength": 30,
+                            "mtu": 1500,
+                            "switch1Details": {
+                                "interfaceName": "Ethernet1/8.3",
+                                "ipv4Address": "192.168.252.9",
+                                "switchId": "<serial>"
+                            },
+                            "switch2Details": {
+                                "interfaceName": "GigabitEthernet2.3",
+                                "ipv4Address": "192.168.252.10",
+                                "switchId": "<serial>"
+                            }
+                        }
+                    ],
+                    "routingInterfaceType": "subInterface"
+                },
+                "fabric1Name": "Pseudoco-DC1",
+                "fabric2Name": "External",
+                "ipVersion": "ipv4",
+                "lastUpdateTimestamp": "2026-11-12T18:28:41Z",
+                "name": "IOT-External",
+                "routingDetails": {
+                    "bfd": false,
+                    "fabric1Details": {
+                        "advertiseDefaultRoute": true,
+                        "localAsn": "65000"
+                    },
+                    "fabric2Details": {
+                        "localAsn": "65531"
+                    },
+                    "routingProtocol": "bgp"
+                },
+                "vrf1Name": "IOT",
+                "vrf2Name": "IOT"
+            },
+            {
+                "attach": true,
+                "configuredFabrics": "fabric1",
+                "connectivityDetails": {
+                    "links": [
+                        {
+                            "dot1qId": 4,
+                            "ipv4MaskLength": 30,
+                            "mtu": 1500,
+                            "switch1Details": {
+                                "interfaceName": "Ethernet1/8.4",
+                                "ipv4Address": "192.168.252.13",
+                                "switchId": "<serial>"
+                            },
+                            "switch2Details": {
+                                "interfaceName": "GigabitEthernet2.4",
+                                "ipv4Address": "192.168.252.14",
+                                "switchId": "<serial>"
+                            }
+                        }
+                    ],
+                    "routingInterfaceType": "subInterface"
+                },
+                "fabric1Name": "Pseudoco-DC1",
+                "fabric2Name": "External",
+                "ipVersion": "ipv4",
+                "lastUpdateTimestamp": "2026-11-12T18:28:41Z",
+                "name": "MAIN-External",
+                "routingDetails": {
+                    "bfd": false,
+                    "fabric1Details": {
+                        "advertiseDefaultRoute": true,
+                        "localAsn": "65000"
+                    },
+                    "fabric2Details": {
+                        "localAsn": "65531"
+                    },
+                    "routingProtocol": "bgp"
+                },
+                "vrf1Name": "MAIN",
+                "vrf2Name": "MAIN"
+            }
+        ],
+        "meta": {
+            "counts": {
+                "remaining": 0,
+                "total": 3
+            },
+            "links": {}
+        }
+    },
+    "links": [
+        {
+            "dst_fabric_name": "External",
+            "dst_interface_name": "Gi2",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SITE11-CEDGE8Kv",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/8",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Service-Leaf"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:02:cd:e8",
+            "dst_switch_id": "Server-1",
+            "dst_switch_name": "Server-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/3",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:10:cf:6e",
+            "dst_switch_id": "Server-1",
+            "dst_switch_name": "Server-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/3",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:07:bc:d1",
+            "dst_switch_id": "Server-2",
+            "dst_switch_name": "Server-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/4",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:04:d7:35",
+            "dst_switch_id": "Server-2",
+            "dst_switch_name": "Server-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/4",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:12:d2:52",
+            "dst_switch_id": "Server-3",
+            "dst_switch_name": "Server-3",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/5",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "",
+            "dst_interface_name": "52:54:00:1e:57:a7",
+            "dst_switch_id": "Server-3",
+            "dst_switch_name": "Server-3",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/5",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/7",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Leaf1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/7",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Leaf1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Port-channel500",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Leaf1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Port-channel500",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-SPINE-1-Ethernet1/1",
+                    "dst_ip": "10.4.0.7",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-Leaf1-Ethernet1/1",
+                    "src_ip": "10.4.0.6",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/1",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/1",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-SPINE-1-Ethernet1/2",
+                    "dst_ip": "10.4.0.3",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-Leaf2-Ethernet1/1",
+                    "src_ip": "10.4.0.2",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/2",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-1",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/1",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-SPINE-2-Ethernet1/3",
+                    "dst_ip": "10.4.0.11",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-Service-Leaf-Ethernet1/2",
+                    "src_ip": "10.4.0.10",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/3",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/2",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Service-Leaf"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-SPINE-1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Service-Leaf"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-SPINE-2-Ethernet1/1",
+                    "dst_ip": "10.4.0.5",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-Leaf1-Ethernet1/2",
+                    "src_ip": "10.4.0.4",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/1",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/2",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-SPINE-2-Ethernet1/2",
+                    "dst_ip": "10.4.0.1",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-Leaf2-Ethernet1/2",
+                    "src_ip": "10.4.0.0",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/2",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SPINE-2",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/2",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "config_data": {
+                "policy_type": "numbered",
+                "template_inputs": {
+                    "bfd_echo_on_dst_interface": false,
+                    "bfd_echo_on_src_interface": false,
+                    "dhcp_relay_on_dst_interface": false,
+                    "dhcp_relay_on_src_interface": false,
+                    "dst_interface_config": "",
+                    "dst_interface_description": "connected-to-DC-Service-Leaf-Ethernet1/1",
+                    "dst_ip": "10.4.0.9",
+                    "dst_ipv6": "",
+                    "fec": "auto",
+                    "interface_admin_state": true,
+                    "mtu": 9216,
+                    "speed": "auto",
+                    "src_interface_config": "",
+                    "src_interface_description": "connected-to-DC-SPINE-1-Ethernet1/3",
+                    "src_ip": "10.4.0.8",
+                    "src_ipv6": ""
+                }
+            },
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "Ethernet1/1",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Service-Leaf",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/3",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-SPINE-1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Service-Leaf",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf1"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Service-Leaf",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Leaf2"
+        },
+        {
+            "dst_fabric_name": "Pseudoco-DC1",
+            "dst_interface_name": "mgmt0",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-Service-Leaf",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "mgmt0",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-SPINE-1"
+        },
+        {
+            "config_data": {
+                "policy_type": "ebgpVrfLite",
+                "template_inputs": {
+                    "auto_gen_config_default_vrf": false,
+                    "auto_gen_config_nx_peer_default_vrf": false,
+                    "auto_gen_config_peer": false,
+                    "dci_tracking": false,
+                    "default_vrf_ebgp_password_key_encryption_type": "3des",
+                    "dst_ebgp_asn": "65531",
+                    "dst_interface_config": "",
+                    "dst_interface_description": "",
+                    "dst_ip_address": "192.168.252.2",
+                    "dst_ipv6_address": "",
+                    "dst_kme_server_ip": "",
+                    "dst_kme_server_port_number": 0,
+                    "dst_macsec_key_chain_prefix": "",
+                    "dst_qkd_profile_name": "",
+                    "dst_trustpoint_label": "",
+                    "ignore_certificate": false,
+                    "inherit_ttag_fabric_setting": true,
+                    "link_mtu": 1500,
+                    "macsec": false,
+                    "macsec_cipher_suite": "",
+                    "macsec_fallback_cryptographic_algorithm": "",
+                    "macsec_primary_cryptographic_algorithm": "",
+                    "override_fabric_macsec": false,
+                    "qkd": false,
+                    "redistrib_ebgp_route_map_name": "",
+                    "routing_tag": "",
+                    "src_ebgp_asn": "65000",
+                    "src_interface_config": "",
+                    "src_interface_description": "",
+                    "src_ip_address_mask": "192.168.252.1/30",
+                    "src_ipv6_address_mask": "",
+                    "src_kme_server_ip": "",
+                    "src_kme_server_port_number": 0,
+                    "src_macsec_key_chain_prefix": "",
+                    "src_qkd_profile_name": "",
+                    "src_trustpoint_label": "",
+                    "template_config_gen_peer": "Ext_VRF_Lite_Jython",
+                    "vrf_name_nx_peer_switch": ""
+                }
+            },
+            "dst_fabric_name": "External",
+            "dst_interface_name": "GigabitEthernet2",
+            "dst_switch_id": "<serial>",
+            "dst_switch_name": "DC-SITE11-CEDGE8Kv",
+            "src_fabric_name": "Pseudoco-DC1",
+            "src_interface_name": "Ethernet1/8",
+            "src_switch_id": "<serial>",
+            "src_switch_name": "DC-Service-Leaf"
+        }
+    ],
+    "switches": {
+        "meta": {
+            "counts": {
+                "remaining": 0,
+                "total": 5
+            }
+        },
+        "switches": [
+            {
+                "additionalData": {
+                    "configSyncStatus": "inSync",
+                    "discoveredSystemMode": "normal",
+                    "discoveryStatus": "ok",
+                    "domainName": "",
+                    "hypershieldConnectivityStatus": "notApplicable",
+                    "hypershieldTenant": "",
+                    "intendedSystemMode": "normal",
+                    "meta": {
+                        "switchDbId": 376080,
+                        "switchUuid": "DCNM-UUID-1250"
+                    },
+                    "platformType": "nx-os",
+                    "remoteCredentialStore": "local",
+                    "scalableUnit": "",
+                    "smartSwitch": false,
+                    "sourceInterfaceName": "mgmt0",
+                    "sourceVrfName": "management",
+                    "systemMode": "normal",
+                    "usage": "others",
+                    "username": "admin",
+                    "vendor": "Cisco"
+                },
+                "advisoryLevel": "none",
+                "alertSuspend": "disabled",
+                "anomalyLevel": "minor",
+                "fabricManagementIp": "198.18.128.101",
+                "fabricName": "Pseudoco-DC1",
+                "fabricType": "vxlanIbgp",
+                "hostname": "DC-Leaf1",
+                "model": "N9K-C9300v",
+                "serialNumber": "<serial>",
+                "softwareVersion": "10.4(2)",
+                "switchId": "<serial>",
+                "switchRole": "leaf",
+                "systemUpTime": "5 days, 12:45:53",
+                "vpcConfigured": true,
+                "vpcData": {
+                    "consistentStatus": true,
+                    "intendedPeerName": "DC-Leaf2",
+                    "keepAliveStatus": "Peer is alive",
+                    "peerLinkStatus": "Peer is OK",
+                    "peerName": "DC-Leaf2",
+                    "peerSwitchId": "<serial>",
+                    "vpcDomain": 1,
+                    "vpcRole": "secondary"
+                }
+            },
+            {
+                "additionalData": {
+                    "configSyncStatus": "inSync",
+                    "discoveredSystemMode": "normal",
+                    "discoveryStatus": "ok",
+                    "domainName": "",
+                    "hypershieldConnectivityStatus": "notApplicable",
+                    "hypershieldTenant": "",
+                    "intendedSystemMode": "normal",
+                    "meta": {
+                        "switchDbId": 376120,
+                        "switchUuid": "DCNM-UUID-1200"
+                    },
+                    "platformType": "nx-os",
+                    "remoteCredentialStore": "local",
+                    "scalableUnit": "",
+                    "smartSwitch": false,
+                    "sourceInterfaceName": "mgmt0",
+                    "sourceVrfName": "management",
+                    "systemMode": "normal",
+                    "usage": "others",
+                    "username": "admin",
+                    "vendor": "Cisco"
+                },
+                "advisoryLevel": "none",
+                "alertSuspend": "disabled",
+                "anomalyLevel": "minor",
+                "fabricManagementIp": "198.18.128.102",
+                "fabricName": "Pseudoco-DC1",
+                "fabricType": "vxlanIbgp",
+                "hostname": "DC-Leaf2",
+                "model": "N9K-C9300v",
+                "serialNumber": "<serial>",
+                "softwareVersion": "10.4(2)",
+                "switchId": "<serial>",
+                "switchRole": "leaf",
+                "systemUpTime": "5 days, 12:45:55",
+                "vpcConfigured": true,
+                "vpcData": {
+                    "consistentStatus": true,
+                    "intendedPeerName": "DC-Leaf1",
+                    "keepAliveStatus": "Peer is alive",
+                    "peerLinkStatus": "Peer is OK",
+                    "peerName": "DC-Leaf1",
+                    "peerSwitchId": "<serial>",
+                    "vpcDomain": 1,
+                    "vpcRole": "primary"
+                }
+            },
+            {
+                "additionalData": {
+                    "configSyncStatus": "inSync",
+                    "discoveredSystemMode": "normal",
+                    "discoveryStatus": "ok",
+                    "domainName": "",
+                    "hypershieldConnectivityStatus": "notApplicable",
+                    "hypershieldTenant": "",
+                    "intendedSystemMode": "normal",
+                    "meta": {
+                        "switchDbId": 380100,
+                        "switchUuid": "DCNM-UUID-1050"
+                    },
+                    "platformType": "nx-os",
+                    "remoteCredentialStore": "local",
+                    "scalableUnit": "",
+                    "smartSwitch": false,
+                    "sourceInterfaceName": "mgmt0",
+                    "sourceVrfName": "management",
+                    "systemMode": "normal",
+                    "usage": "others",
+                    "username": "admin",
+                    "vendor": "Cisco"
+                },
+                "advisoryLevel": "none",
+                "alertSuspend": "disabled",
+                "anomalyLevel": "minor",
+                "fabricManagementIp": "198.18.128.11",
+                "fabricName": "Pseudoco-DC1",
+                "fabricType": "vxlanIbgp",
+                "hostname": "DC-SPINE-1",
+                "model": "N9K-C9300v",
+                "serialNumber": "<serial>",
+                "softwareVersion": "10.4(2)",
+                "switchId": "<serial>",
+                "switchRole": "spine",
+                "systemUpTime": "5 days, 12:45:54",
+                "vpcConfigured": false
+            },
+            {
+                "additionalData": {
+                    "configSyncStatus": "inSync",
+                    "discoveredSystemMode": "normal",
+                    "discoveryStatus": "ok",
+                    "domainName": "",
+                    "hypershieldConnectivityStatus": "notApplicable",
+                    "hypershieldTenant": "",
+                    "intendedSystemMode": "normal",
+                    "meta": {
+                        "switchDbId": 380140,
+                        "switchUuid": "DCNM-UUID-1100"
+                    },
+                    "platformType": "nx-os",
+                    "remoteCredentialStore": "local",
+                    "scalableUnit": "",
+                    "smartSwitch": false,
+                    "sourceInterfaceName": "mgmt0",
+                    "sourceVrfName": "management",
+                    "systemMode": "normal",
+                    "usage": "others",
+                    "username": "admin",
+                    "vendor": "Cisco"
+                },
+                "advisoryLevel": "none",
+                "alertSuspend": "disabled",
+                "anomalyLevel": "minor",
+                "fabricManagementIp": "198.18.128.12",
+                "fabricName": "Pseudoco-DC1",
+                "fabricType": "vxlanIbgp",
+                "hostname": "DC-SPINE-2",
+                "model": "N9K-C9300v",
+                "serialNumber": "<serial>",
+                "softwareVersion": "10.4(2)",
+                "switchId": "<serial>",
+                "switchRole": "spine",
+                "systemUpTime": "5 days, 12:45:49",
+                "vpcConfigured": false
+            },
+            {
+                "additionalData": {
+                    "configSyncStatus": "inSync",
+                    "discoveredSystemMode": "normal",
+                    "discoveryStatus": "ok",
+                    "domainName": "",
+                    "hypershieldConnectivityStatus": "notApplicable",
+                    "hypershieldTenant": "",
+                    "intendedSystemMode": "normal",
+                    "meta": {
+                        "switchDbId": 382930,
+                        "switchUuid": "DCNM-UUID-1150"
+                    },
+                    "platformType": "nx-os",
+                    "remoteCredentialStore": "local",
+                    "scalableUnit": "",
+                    "smartSwitch": false,
+                    "sourceInterfaceName": "mgmt0",
+                    "sourceVrfName": "management",
+                    "systemMode": "normal",
+                    "usage": "others",
+                    "username": "admin",
+                    "vendor": "Cisco"
+                },
+                "advisoryLevel": "none",
+                "alertSuspend": "disabled",
+                "anomalyLevel": "minor",
+                "fabricManagementIp": "198.18.128.13",
+                "fabricName": "Pseudoco-DC1",
+                "fabricType": "vxlanIbgp",
+                "hostname": "DC-Service-Leaf",
+                "model": "N9K-C9300v",
+                "serialNumber": "<serial>",
+                "softwareVersion": "10.4(2)",
+                "switchId": "<serial>",
+                "switchRole": "border",
+                "systemUpTime": "5 days, 12:45:47",
+                "vpcConfigured": false
+            }
+        ]
+    }
+}

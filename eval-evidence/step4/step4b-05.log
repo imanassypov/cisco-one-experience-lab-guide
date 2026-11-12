@@ -1,0 +1,121 @@
+
+PLAY [Stage 05 - create and attach the L3Outs on the border leaf] **************
+
+TASK [Read the declared VRFs] **************************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Flatten the declared VRFs] ***********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail when the declared border leaf is not in the switch table] ***********
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail when the declared border leaf does not hold the border role] ********
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail when a row names a VRF that vrfs.nac.yaml never declares] ***********
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail when the model does not attach the border leaf to every handed-off VRF] ***
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail on a duplicate dot1q tag or L3Out name] *****************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail when the sub-interface MTU exceeds the link MTU] ********************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Fail when an address is not written as address/prefix] *******************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Select VRFs for this run] ************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail when dc_vrf_lite_only selects no declared VRFs] *********************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Read the inter-fabric links of the DC fabric] ****************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail when the inter-fabric link is missing] ******************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Build the L3Out definitions] *********************************************
+included: /home/cisco/eval-nd-l3out/ansible-automation/02_data_center/ansible/playbooks/tasks/l3out_config.yml for Pseudoco-DC1
+
+TASK [Read the declared fabric ASN] ********************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Read the switch model stage 00 generated] ********************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Resolve the border leaf and edge router serials] *************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail when stage 00 left a serial unresolved] *****************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Build the L3Out definitions] *********************************************
+ok: [Pseudoco-DC1] => (item=PROD-External)
+ok: [Pseudoco-DC1] => (item=IOT-External)
+ok: [Pseudoco-DC1] => (item=MAIN-External)
+
+TASK [Show what will be created] ***********************************************
+ok: [Pseudoco-DC1] => {
+    "msg": [
+        "L3Outs on DC-Service-Leaf Ethernet1/8 (interface_name form: subinterface):",
+        "| L3Out | VRF | Peer VRF | Dot1q | Local address | Neighbor | MTU |",
+        "| --- | --- | --- | ---: | --- | --- | ---: |",
+        "| PROD-External | PROD | PROD | 2 | 192.168.252.5/30 | 192.168.252.6 | 1500 |",
+        "| IOT-External | IOT | IOT | 3 | 192.168.252.9/30 | 192.168.252.10 | 1500 |",
+        "| MAIN-External | MAIN | MAIN | 4 | 192.168.252.13/30 | 192.168.252.14 | 1500 |"
+    ]
+}
+
+TASK [Create or update the L3Outs] *********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read which L3Outs are already attached] **********************************
+ok: [Pseudoco-DC1]
+
+TASK [Select the L3Outs that still need attaching] *****************************
+ok: [Pseudoco-DC1]
+
+TASK [Report the L3Out result] *************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "L3Out intent: already matched, nothing sent.\nAttach: all already attached, nothing sent.\nStage 06 deploys it to DC-Service-Leaf."
+}
+
+PLAY RECAP *********************************************************************
+Pseudoco-DC1               : ok=24   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
