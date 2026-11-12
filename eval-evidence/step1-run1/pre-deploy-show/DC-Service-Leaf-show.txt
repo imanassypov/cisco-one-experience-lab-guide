@@ -1,26 +1,0 @@
-### show running-config interface Ethernet1/8
-!Command: show running-config interface Ethernet1/8
-!Running configuration last done at: Thu Nov 12 17:50:40 2026
-!Time: Thu Nov 12 17:59:20 2026
-
-version 10.4(2) Bios:version  
-
-interface Ethernet1/8
-  no switchport
-  no shutdown
-
-### show running-config | section "^interface Ethernet1/8\."
-awk: warning: escape sequence `\.' treated as plain `.'
-
-### show running-config bgp
-show running-config bgp
-                                      ^
-% Invalid command at '^' marker.
-DC-Service-Leaf# 
-
-### show ip bgp summary vrf all
-show ip bgp summary vrf all
-                         ^
-% Invalid command at '^' marker.
-DC-Service-Leaf# 
-
