@@ -3,7 +3,8 @@
 Branch `eval/nd-l3out`, started from tag `eval-nd-l3out-base` (`main` at `a944eb5`).
 Nothing in this branch merges to `main`.
 
-**Status: Phase 1 (static analysis) complete. Phases 2 and 3 not started.**
+**Status: Phase 1 complete. Phase 2 (implementation, no pod) complete - see
+section 5a. Phase 3 (pod tests) not started.**
 
 Evidence labels used throughout:
 
@@ -474,6 +475,99 @@ Why one deploy instead of two, and the fallback:
 
 Ordering against stage 02: the L3Out stage keeps running after stage 02 until
 Phase 3 answers Q8.
+
+## 5a. Phase 2 implementation (code only, not run on a pod)
+
+Approved on 2026-11-12: renumbered layout; Python dependencies installed into
+the existing environment; `cisco.nd` stages run as separate `ansible-playbook`
+processes; the pod may be torn down and rebuilt.
+
+Installed: `cisco.nd` 1.5.0 from `CiscoDevNet/ansible-nd` commit `671e596`,
+into the git-ignored `.eval_collections/` at the repository root, with
+`ansible-galaxy collection install 'git+https://github.com/CiscoDevNet/ansible-nd.git,671e596' -p .eval_collections --no-deps`.
+Only the DC track's `ansible.cfg` searches it (first). `pydantic` 2.12.5,
+`requests_toolbelt`, `jsonpath-ng` and `lxml` installed with pip into the
+existing local environment. Not installed on the script server yet.
+
+### What was built
+
+| Stage | File | Controller calls |
+| --- | --- | --- |
+| 01 | `01_dc_deploy.yml`, `tasks/run_stage.yml` | none; runs 02-07 as separate processes, logs each under `evidence/dc-deploy-<run>/` |
+| 03 | `03_fabric_advanced_settings.yml` | `nd_manage_fabric_ibgp_vxlan` gathered + merged |
+| 04 | `04_external_fabric.yml` | `nd_manage_fabric_external`, `nd_manage_switches` (`config_actions` save/deploy false), `nd_manage_links` `ebgpVrfLite`, 1 `nd_rest` read |
+| 05 | `05_l3out.yml`, `tasks/l3out_config.yml` | `nd_manage_links` gathered (precheck), `nd_manage_l3out` merged, then merged with `attach: true` and `failed_when` on attach warnings |
+| 06 | `06_recalculate_and_deploy.yml` | 2 `dcnm_rest` (config-save, config-preview), NaC `dtc.deploy` |
+| 07 | `07_verify_fabric.yml` | `nd_manage_l3out` check mode, 6 `nd_rest` reads, SSH unchanged |
+| 08 | `08_cleanup.yml` | `nd_manage_fabric_*` gathered/deleted, `nd_manage_l3out` (check-mode read, detach, delete), `nd_manage_networks`/`nd_manage_vrfs` deleted, `nd_manage_links` deleted, 2 `nd_rest` (switch list, forced remove) |
+
+Variable files keep their names and the `dc_vrf_lite_*` prefix; keys that feed
+a module were renamed to its options (`dc_vrf_lite_fabric_settings`,
+`dc_vrf_lite_ifc`, `dc_advanced_nd_fabric_settings`,
+`dc_external_fabric_settings`). Each handoff row gained an L3Out `name`.
+Two per-run switches cover open items: `dc_vrf_lite_interface_form`
+(`parent` | `subinterface`, B2) and the `peer_vrf` column (B1).
+
+### Deviations from the Phase 1 table, and why
+
+| Item | Phase 1 proposal | Built | Reason |
+| --- | --- | --- | --- |
+| Stage 07 inventory, VRF, network and attachment reads (5) | `gathered` modules | `nd_rest`, same endpoints | Read from code: `gathered` output is replay-safe config and drops `vrf_status` and attachment deploy state (`nd@671e596:plugins/module_utils/models/manage_vrfs/vrf_data_models.py:648-661`); the report is built on `lanAttachState`, serial and mode. Moved off `dcnm_rest` so the stage uses one collection per process |
+| Stage 07 L3Out attach state | check-mode module | check-mode module + 1 `nd_rest` GET `/api/v1/manage/l3Outs?fabricName=`, saved as evidence | No module output carries an attach state (B4) |
+| Stage 04 serial check | `gathered` | 1 `nd_rest` GET `/api/v1/manage/fabrics/External/switches` | `nd_manage_switches` outputs carry `seed_ip`, `role`, `platform_type` only (`nd_manage_switches.py:441-490`) |
+| Stage 08 switch removal | `nd_manage_switches deleted` | `nd_rest` POST `.../switchActions/remove?force=true` + list | The module posts the same endpoint without `force` (`module_utils/manage_switches/nd_switch_resources.py:1278-1280`); the endpoint accepts it (`endpoints/v1/manage/manage_fabrics_switchactions.py:62,119-170`). `main` needs force for the border leaf |
+| Stage 08 L3Out read | n/a | `nd_manage_l3out state: deleted` in check mode | The module has no `gathered`; check mode returns `before` without writing |
+
+### Before and after (measured)
+
+| | `main` `a944eb5` | `eval/nd-l3out` |
+| --- | --- | --- |
+| Stages 03-09 / 03-08 + shared tasks, lines | 3224 | 2553 (03 93, 04 245, 05 297, 06 91, 07 1250, 08 445, tasks 132) |
+| `dcnm_rest` tasks | 35 | 2 (stage 06) |
+| `nd_rest` tasks | 0 | 9 (04: 1, 07: 6, 08: 2) |
+| `cisco.dcnm` module tasks outside NaC | 7 | 0 |
+| Collections | `cisco.nac_dc_vxlan`, `cisco.dcnm`, `cisco.nxos` | the same + `cisco.nd` (develop) |
+
+Stage 07 stayed near its old size: its reads moved transport, they did not
+disappear. The Phase 1 estimate of ~1000 lines and 0-1 REST calls for it was
+wrong for the reason in the first deviation row.
+
+### Validation done without a pod
+
+- `ansible-playbook --syntax-check` passes for all nine playbooks (local
+  ansible-core 2.21.5).
+- `ansible-lint` 26.10.1 passes at the `production` profile for the whole
+  `playbooks/` tree, linted against the eval `cisco.nd`. ansible-lint puts
+  `~/.ansible/collections` first, so a scratch collection path is needed to
+  make it see the eval copy. Its `args` rule cannot check
+  `nd_manage_links.template_inputs` (validated per policy at run time).
+- The link payload and all three L3Out payloads, in both interface-name
+  forms, were rendered from the real variable files and validated against the
+  modules' own pydantic models (`NDLinkModel`, `L3OutModel`).
+- The stage 07 L3Out comparison and both report templates were rendered with
+  simulated controller output (matching, wrong MTU, missing).
+- The stage runner was tested with dummy stages: extra-vars forwarding,
+  change detection, stop on first failure, logs.
+
+Found while building: the repo's `{% set %}`/`append`/`{{ out }}` idiom
+returns a list on ansible-core 2.17 but a string on newer cores, which the
+L3Out model rejects. The L3Out builder uses a single-expression `set_fact`
+loop instead, which works on both. Other stages still use the idiom; they are
+fine on the pinned 2.17.14.
+
+Found in code review: `nd_manage_links` resolves both link endpoints in their
+fabrics' inventories before any state runs, `deleted` included
+(`nd@671e596:plugins/modules/nd_manage_links.py:839`;
+`plugins/module_utils/orchestrators/links.py:89-90,124-150`). A delete
+therefore fails when the router or a fabric is already gone. Stage 08 now
+reads the links with `gathered` first and deletes only a link that exists;
+stage 04 skips the link when the router is skipped. Worth raising upstream:
+a delete should not need live endpoints.
+
+Not verified (needs the pod): everything in section 8, plus that `nd_rest`
+reaches the legacy `/appcenter/.../lan-fabric` read endpoints through the
+`cisco.nd.nd` httpapi plugin, and that re-sending the controller's own L3Out
+copy with `attach: false` is accepted (stage 08).
 
 ## 6. Phase 3 results
 
