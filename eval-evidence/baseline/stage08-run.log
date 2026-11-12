@@ -1,0 +1,133 @@
+
+PLAY [Stage 08a - name the border leaf as the target of the BGP session check] ***
+
+TASK [Add the border leaf to the switch group so it can be read over SSH] ******
+ok: [Pseudoco-DC1]
+
+PLAY [Stage 08b - read the VRF-Lite BGP session state off the border leaf] *****
+
+TASK [Ask the border leaf for the BGP session state of each VRF-Lite VRF] ******
+ok: [DC-Service-Leaf] => (item=PROD to 192.168.252.6)
+ok: [DC-Service-Leaf] => (item=IOT to 192.168.252.10)
+ok: [DC-Service-Leaf] => (item=MAIN to 192.168.252.14)
+
+TASK [Read each VRF-Lite sub-interface off the border leaf] ********************
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.2)
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.3)
+ok: [DC-Service-Leaf] => (item=Ethernet1/8.4)
+
+PLAY [Stage 08c - compare the fabric against intent and write the report] ******
+
+TASK [Read the declared VRFs] **************************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Read the declared networks] **********************************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Flatten the declared intent] *********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Fail on an attach group that is named but never declared] ****************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Read the fabric inventory] ***********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the fabric VRFs] ****************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the fabric networks] ************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the VRF attachments] ************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the generated switch model for the VRF-Lite border serial] **********
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Resolve the VRF-Lite border serial from topology_switches.nac.yaml] ******
+ok: [Pseudoco-DC1]
+
+TASK [Fail when the generated topology has no border serial] *******************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Read the VRF-Lite extensions through Manage] *****************************
+ok: [Pseudoco-DC1]
+
+TASK [Validate the Manage VRF-Lite query response] *****************************
+ok: [Pseudoco-DC1] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Index Manage VRF-Lite attachments by VRF] ********************************
+ok: [Pseudoco-DC1]
+
+TASK [Read the network attachments] ********************************************
+ok: [Pseudoco-DC1]
+
+TASK [Normalise the controller responses] **************************************
+ok: [Pseudoco-DC1]
+
+TASK [Compare each switch against intent] **************************************
+ok: [Pseudoco-DC1] => (item=DC-Leaf1)
+ok: [Pseudoco-DC1] => (item=DC-Leaf2)
+ok: [Pseudoco-DC1] => (item=DC-SPINE-1)
+ok: [Pseudoco-DC1] => (item=DC-SPINE-2)
+ok: [Pseudoco-DC1] => (item=DC-Service-Leaf)
+
+TASK [Compare VRFs] ************************************************************
+ok: [Pseudoco-DC1] => (item=MAIN)
+ok: [Pseudoco-DC1] => (item=PROD)
+ok: [Pseudoco-DC1] => (item=IOT)
+
+TASK [Compare networks] ********************************************************
+ok: [Pseudoco-DC1] => (item=MainNetwork1)
+ok: [Pseudoco-DC1] => (item=ProdNetwork1)
+ok: [Pseudoco-DC1] => (item=IOTNetwork1)
+
+TASK [Compare the VRF-Lite extensions] *****************************************
+ok: [Pseudoco-DC1] => (item=PROD)
+ok: [Pseudoco-DC1] => (item=IOT)
+ok: [Pseudoco-DC1] => (item=MAIN)
+
+TASK [Compare the VRF-Lite sub-interfaces on the switch] ***********************
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.2)
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.3)
+ok: [Pseudoco-DC1] => (item=Ethernet1/8.4)
+
+TASK [Compare the VRF-Lite BGP sessions against intent] ************************
+ok: [Pseudoco-DC1] => (item=PROD to 192.168.252.6)
+ok: [Pseudoco-DC1] => (item=IOT to 192.168.252.10)
+ok: [Pseudoco-DC1] => (item=MAIN to 192.168.252.14)
+
+TASK [Collect the failures] ****************************************************
+ok: [Pseudoco-DC1]
+
+TASK [Set the verification evidence run ID] ************************************
+ok: [Pseudoco-DC1]
+
+TASK [Make sure the evidence directory exists] *********************************
+ok: [Pseudoco-DC1 -> localhost]
+
+TASK [Write the verification report] *******************************************
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [Write the verification report as HTML] ***********************************
+changed: [Pseudoco-DC1 -> localhost]
+
+TASK [Report the outcome] ******************************************************
+ok: [Pseudoco-DC1] => {
+    "msg": "20 of 20 check(s) match the declared intent. Markdown: /home/cisco/cisco-one-experience-lab-automation/ansible-automation/02_data_center/ansible/evidence/stage08-verification-20261112T180052189633Z.md. HTML: /home/cisco/cisco-one-experience-lab-automation/ansible-automation/02_data_center/ansible/evidence/stage08-verification-20261112T180052189633Z.html"
+}
+
+PLAY RECAP *********************************************************************
+DC-Service-Leaf            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Pseudoco-DC1               : ok=29   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
