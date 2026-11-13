@@ -1239,7 +1239,7 @@ body{margin:0;font-family:'Open Sans',-apple-system,'Segoe UI',Arial,sans-serif;
 <p>Use browser-based Web RDP to open Jumphost1, as described in <a href="#page-7946">Familiarize Yourself with the Jumphost</a>. On Jumphost1, open a terminal and connect to the script server:</p>
 <pre>ssh cisco@198.18.134.12</pre>
 <p>Enter <code>C1sco12345</code> when prompted. Once connected, clone the repository in that SSH session:</p>
-<pre>git clone https://github.com/imanassypov/cisco-one-experience-lab-automation.git
+<pre>git clone --depth 1 --single-branch https://github.com/imanassypov/cisco-one-experience-lab-automation.git
 cd cisco-one-experience-lab-automation/ansible-automation/00_scriptserver_bootstrap</pre>
 <p><img class="img-fluid" src="automation_images/script_server_git_clone.png" alt="Kali terminal showing the repository cloned and the working directory changed to the script server bootstrap folder"></p>
 <p>You can clone anywhere you like — every path in the automation is worked out from where the playbooks live, so the home directory is just a convention.</p>
